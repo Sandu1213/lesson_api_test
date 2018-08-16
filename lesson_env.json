@@ -1,0 +1,134 @@
+{
+  "id": "3b4d8544-3103-4a14-b136-a9dea717fb9b",
+  "name": "less_test",
+  "values": [
+    {
+      "key": "url",
+      "value": "10.27.2.196:7000",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "req_port",
+      "value": "7000",
+      "enabled": false,
+      "type": "text"
+    },
+    {
+      "key": "subject_1",
+      "value": "killyou",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "id",
+      "value": 31,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "skillid",
+      "value": 8,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "cdKey_count",
+      "value": 4,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "cdKey_id",
+      "value": 56,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "subjectid",
+      "value": 32,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "les_sub_name",
+      "value": "指定课程{{$randomInt}}",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "les_sub_id",
+      "value": 38,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "les_skill_name",
+      "value": "指定技能",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "les_skillid",
+      "value": 9,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "lesson_coverUrl",
+      "value": "http://keepwork.cover",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "lesson_videoUrl",
+      "value": "http://keepwork.video",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "les_skill_info",
+      "value": [
+        {
+          "id": 9,
+          "score": 90
+        }
+      ],
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "lesson_id",
+      "value": 10,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "les_content_ver",
+      "value": 2,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "admin_lesson_id",
+      "value": 14,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "learn_id",
+      "value": 6,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "lessonpackage_id",
+      "value": 4,
+      "enabled": true,
+      "type": "text"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2018-08-14T09:34:53.883Z",
+  "_postman_exported_using": "Postman/6.0.10"
+}

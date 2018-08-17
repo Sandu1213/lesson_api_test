@@ -4,18 +4,18 @@
   "values": [
     {
       "key": "url",
-      "value": "10.27.2.196:7000",
+      "value": "api-stage.keepwork.com",
       "enabled": true,
       "type": "text"
     },
     {
-      "key": "req_port",
-      "value": "7000",
-      "enabled": false,
+      "key": "base",
+      "value": "lesson/v0",
+      "enabled": true,
       "type": "text"
     },
     {
-      "key": "subject_1",
+      "key": "subject_",
       "value": "killyou",
       "enabled": true,
       "type": "text"
@@ -34,19 +34,19 @@
     },
     {
       "key": "cdKey_count",
-      "value": 4,
+      "value": 2,
       "enabled": true,
       "type": "text"
     },
     {
       "key": "cdKey_id",
-      "value": 56,
+      "value": 209,
       "enabled": true,
       "type": "text"
     },
     {
       "key": "subjectid",
-      "value": 32,
+      "value": 9,
       "enabled": true,
       "type": "text"
     },
@@ -58,13 +58,13 @@
     },
     {
       "key": "les_sub_id",
-      "value": 38,
+      "value": 10,
       "enabled": true,
       "type": "text"
     },
     {
       "key": "les_skill_name",
-      "value": "指定技能",
+      "value": "补充新技能",
       "enabled": true,
       "type": "text"
     },
@@ -99,36 +99,96 @@
     },
     {
       "key": "lesson_id",
-      "value": 10,
+      "value": 17,
       "enabled": true,
       "type": "text"
     },
     {
       "key": "les_content_ver",
-      "value": 2,
+      "value": 1,
       "enabled": true,
       "type": "text"
     },
     {
       "key": "admin_lesson_id",
-      "value": 14,
+      "value": 15,
       "enabled": true,
       "type": "text"
     },
     {
       "key": "learn_id",
-      "value": 6,
+      "value": 8,
       "enabled": true,
       "type": "text"
     },
     {
       "key": "lessonpackage_id",
-      "value": 4,
+      "value": 20,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "Auth",
+      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlSWQiOjEwLCJleHAiOjE1MzQ4MzQ2NzEsImlzQWRtaW4iOnRydWUsInVzZXJJZCI6MjMsInVzZXJuYW1lIjoiZnVuY3Rlc3QifQ.Tm1VellqRTNZamxqT1RjMk1XRTRNRGc1TnpRelpUQmxNakZqTldKbU1tUT0",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "subject_1",
+      "value": "killyou",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "lesson_again_id",
+      "value": 18,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "userid",
+      "value": 23,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "teacher_cdkey",
+      "value": "76a8fa20a20211e8b73c19f53a5a46f6",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "les_again_skillid",
+      "value": 10,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "learnself_id",
+      "value": 6,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "room_id",
+      "value": 16,
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "room_key",
+      "value": "000016357",
+      "enabled": true,
+      "type": "text"
+    },
+    {
+      "key": "learnrecord_id",
+      "value": 11,
       "enabled": true,
       "type": "text"
     }
   ],
   "_postman_variable_scope": "environment",
-  "_postman_exported_at": "2018-08-14T09:34:53.883Z",
+  "_postman_exported_at": "2018-08-17T09:56:10.688Z",
   "_postman_exported_using": "Postman/6.0.10"
 }

@@ -129,7 +129,7 @@
     },
     {
       "key": "Auth",
-      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlSWQiOjEwLCJleHAiOjE1MzQ4MzQ2NzEsImlzQWRtaW4iOnRydWUsInVzZXJJZCI6MjMsInVzZXJuYW1lIjoiZnVuY3Rlc3QifQ.Tm1VellqRTNZamxqT1RjMk1XRTRNRGc1TnpRelpUQmxNakZqTldKbU1tUT0",
+      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlSWQiOjEwLCJleHAiOjE1MzUyMDQxNTIsImlzQWRtaW4iOnRydWUsInVzZXJJZCI6MjMsInVzZXJuYW1lIjoiZnVuY3Rlc3QifQ.TXpneU5qbGpNelUwWW1RMFlUVmlOREEzT1RSak1tWXlNemxpTW1VMU9UVT0",
       "enabled": true,
       "type": "text"
     },
@@ -189,6 +189,6 @@
     }
   ],
   "_postman_variable_scope": "environment",
-  "_postman_exported_at": "2018-08-17T09:56:10.688Z",
+  "_postman_exported_at": "2018-08-21T09:37:37.963Z",
   "_postman_exported_using": "Postman/6.0.10"
 }

@@ -958,7 +958,7 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -1785,7 +1785,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"lessonName\":\"修课\",\n\t\"extra\": {\n        \"coverUrl\": \"\",\n        \"vedioUrl\": \"\"\n    }\n}"
+					"raw": "{\n\t\"lessonName\":\"思想课\"\n\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/lessons/{{lesson_id}}",
@@ -2057,7 +2057,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{url}}/{{base}}/lessons/{{lesson_id}}/skills?skillId={{les_skillid}}",
+					"raw": "http://{{url}}/{{base}}/lessons/{{lesson_id}}/skills?skillId={{les_again_skillid}}",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -2071,7 +2071,7 @@
 					"query": [
 						{
 							"key": "skillId",
-							"value": "{{les_skillid}}"
+							"value": "{{les_again_skillid}}"
 						}
 					]
 				}
@@ -2276,13 +2276,15 @@
 					"raw": "{\n\t\"id\":2,\n\t\"extra\":{\"key\":1}\n}"
 				},
 				"url": {
-					"raw": "http://{{url}}/{{base}}/learnRecords",
+					"raw": "http://{{url}}/{{base}}/lessons/{{lesson_id}}/learnRecords",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"{{base}}",
+						"lessons",
+						"{{lesson_id}}",
 						"learnRecords"
 					]
 				}
@@ -2342,7 +2344,7 @@
 			"response": []
 		},
 		{
-			"name": "课程包-课程列表",
+			"name": "课程包-获取用户创建的课程包列表",
 			"event": [
 				{
 					"listen": "test",
@@ -2392,12 +2394,12 @@
 			"response": []
 		},
 		{
-			"name": "课程包-创建",
+			"name": "课程包-获取老师的授课课程包列表",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "34a16e08-b9f0-4408-b378-b5b70ab66084",
+						"id": "108736a6-4551-45c6-9c7d-9e9287ea0f3b",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"verification code \",function(){",
@@ -2405,11 +2407,114 @@
 							"});",
 							"",
 							"pm.test(\"content verification \",function(){",
-							"    pm.expect(pm.response.text()).to.include(\"课程包\");",
+							"    pm.expect(pm.response.text()).to.include(\"packageName\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"packageName\":\"NPL\"\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/teach",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"teach"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-获取热门课程包",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "108736a6-4551-45c6-9c7d-9e9287ea0f3b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content verification \",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"packageName\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"packageName\":\"NPL\"\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/hots",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"hots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-创建",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "378f80f9-7a13-4091-bb63-152987644e27",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content verification \",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"编程\");",
 							"});",
 							"",
 							"var res = JSON.parse(responseBody);",
-							"pm.environment.set(\"lessonpackage_id\",res.id)"
+							"pm.environment.set(\"lessonpackage_id\",res.id)",
+							""
 						]
 					}
 				}
@@ -2428,7 +2533,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"第{{$randomInt}}个课程包\",\n\t\"minAge\":\"1\",\n\t\"maxAge\":\"4\",\n\t\"intro\":\"hello boy\",\n\t\"cost\": 20,\n    \"extra\":{\n    \t\"coverUrl\":\"https://www.baidu.com\"\n    }\n}"
+					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":10,\n    \"extra\":{\n    \t\"coverUrl\":\"http://git.keepwork.com/gitlab_rls_lesson/keepworkcs/raw/master/lesson_images/img_1521719336579.gif\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/packages",
@@ -2450,7 +2555,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "dc43331a-f6c0-4414-9c70-da980d7580e6",
+						"id": "506462be-7a75-4169-9770-2b05c5b03f4f",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"verification code \",function(){",
@@ -2458,7 +2563,7 @@
 							"});",
 							"",
 							"pm.test(\"content verification \",function(){",
-							"    pm.expect(pm.response.text()).to.include(\"课程包\");",
+							"    pm.expect(pm.response.text()).to.include(\"编程\");",
 							"});"
 						]
 					}
@@ -2526,7 +2631,58 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"packageName\":\"NPL98\",\n\t\"cost\":20\n}"
+					"raw": "{\n\t\"packageName\": \"NPLNo.{{$randomInt}}\",\n\t\"rmb\":50\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"{{lessonpackage_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-获取指定课程包",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f5d9992-0e6b-4314-bc75-a02097e3ff5c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content verification \",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"NPL\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"packageName\":\"NPL\"\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}",
@@ -2580,7 +2736,7 @@
 					"raw": "{\n\t\"packageName\":\"NPL\"\n}"
 				},
 				"url": {
-					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}",
+					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}/detail",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -2588,7 +2744,119 @@
 					"path": [
 						"{{base}}",
 						"packages",
-						"{{lessonpackage_id}}"
+						"{{lessonpackage_id}}",
+						"detail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-课程包搜索",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0cb712f5-7ef8-441b-85cc-bdf6e43bd5a0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":10,\n    \"extra\":{\n    \t\"coverUrl\":\"http://git.keepwork.com/gitlab_rls_lesson/keepworkcs/raw/master/lesson_images/img_1521719336579.gif\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/search?userId={{userid}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"search"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-课程包搜索2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d0d45e8-0281-4828-a9c9-e507949b7d15",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":10,\n    \"extra\":{\n    \t\"coverUrl\":\"http://git.keepwork.com/gitlab_rls_lesson/keepworkcs/raw/master/lesson_images/img_1521719336579.gif\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/search?id={{lessonpackage_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"search"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{lessonpackage_id}}"
+						}
 					]
 				}
 			},
@@ -2617,7 +2885,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c3449b2f-5667-41a0-9f89-cb97e79da684",
+						"id": "8ce038b9-4eb1-4a3e-afda-33214640aa61",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"responseCode is 200\",function(){",
@@ -2625,7 +2893,7 @@
 							"});",
 							"",
 							"pm.test(\"response content is correct\",function(){",
-							"    pm.expect(pm.response.text()).to.include(\"打造精品课程\");",
+							"    pm.expect(pm.response.text()).to.include(\"新课程\");",
 							"});",
 							"",
 							"var jsondata = JSON.parse(responseBody);",
@@ -2648,7 +2916,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \n\t\"skills\":[{\"id\":1,\"score\":80}],\n\t\"lessonName\":\"lessons{{$randomInt}}\",\n\t\"goals\":\"打造精品课程\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"extra\": {\n        \"coverUrl\": \"{{lesson_coverUrl}}\",\n        \"vedioUrl\": \"{{lesson_videoUrl}}\"\n    }\n\t\n}"
+					"raw": "{    \n\t\"skills\":[{\"id\":1,\"score\":80}],\n\t\"lessonName\":\"新课程NO.{{$randomInt}}\",\n\t\"goals\":\"新课程哟\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"extra\": {\n        \"coverUrl\": \"{{lesson_coverUrl}}\",\n        \"vedioUrl\": \"{{lesson_videoUrl}}\"\n    }\n\t\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/lessons",
@@ -2711,6 +2979,116 @@
 						"packages",
 						"{{lessonpackage_id}}",
 						"lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-获取课程表里的课程列表",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46355812-a667-4d30-822a-a02223e99bbf",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content verification \",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"lessonName\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lessonId\":{{lesson_again_id}}\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}/lessons",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"{{lessonpackage_id}}",
+						"lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-删除课程",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3c4e707-1060-43b6-a6a5-0168686602a6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content verification \",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"1\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lessonId\":{{lesson_again_id}}\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}/lessons?lessonId={{lesson_again_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"{{lessonpackage_id}}",
+						"lessons"
+					],
+					"query": [
+						{
+							"key": "lessonId",
+							"value": "{{lesson_again_id}}"
+						}
 					]
 				}
 			},
@@ -2822,11 +3200,11 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e5f93f6e-44c8-4af3-82a2-4b0302442afe",
+						"id": "b5deb797-932e-464f-9be8-b277f8ba75ec",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"verification code \",function(){",
-							"    pm.response.to.have.status(200);",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,400]);",
 							"});",
 							"",
 							""
@@ -2872,16 +3250,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "68629ed6-a287-4cf9-8246-31e57f3af53e",
+						"id": "30094298-8824-4302-bf41-97ad211d5fd5",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"verification code \",function(){",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"content verification \",function(){",
-							"    pm.expect(pm.response.text()).to.include(\"true\");",
-							"});"
+							""
 						]
 					}
 				}
@@ -3098,7 +3474,7 @@
 				],
 				"body": {},
 				"url": {
-					"raw": "http://{{url}}/{{base}}/classrooms/",
+					"raw": "http://{{url}}/{{base}}/classrooms/{{room_id}}",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -3106,7 +3482,7 @@
 					"path": [
 						"{{base}}",
 						"classrooms",
-						""
+						"{{room_id}}"
 					]
 				}
 			},
@@ -3189,7 +3565,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\n\t\"extra\":{}\n}"
+					"raw": "{\n\t\n\t\"extra\":{\n\t\t \"lessonGoals\": \"modify verification\"\n\t}\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/classrooms/{{room_id}}",
@@ -3398,13 +3774,16 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f4e4bc53-03e4-4fad-8264-5f3356621efb",
+						"id": "90741cf8-70fb-4c9c-997e-96254dfaaf70",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"learn Records verification code \",function(){",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
+							"pm.test(\"learn status verification\",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"0\")",
+							"});",
 							"var res = JSON.parse(responseBody);",
 							"pm.environment.set(\"learn_id\",res.id)"
 						]
@@ -3425,7 +3804,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"packageId\":4,\n\t\"lessonId\":13,\n\t\"state\":1\n}"
+					"raw": "{\n\t\"packageId\":{{lessonpackage_id}},\n\t\"lessonId\":{{lesson_id}},\n\t\"state\":0\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/learnRecords",
@@ -3572,7 +3951,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\n\t\"state\":2\n}"
+					"raw": "{\n\t\n\t\"state\":1\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/learnRecords/{{learn_id}}",

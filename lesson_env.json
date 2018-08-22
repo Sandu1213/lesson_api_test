@@ -1,5 +1,5 @@
 {
-  "id": "3b4d8544-3103-4a14-b136-a9dea717fb9b",
+  "id": "ea11e492-1930-4ce4-af10-aaee444d1a0f",
   "name": "less_test",
   "values": [
     {
@@ -40,7 +40,7 @@
     },
     {
       "key": "cdKey_id",
-      "value": 209,
+      "value": 419,
       "enabled": true,
       "type": "text"
     },
@@ -123,7 +123,7 @@
     },
     {
       "key": "lessonpackage_id",
-      "value": 20,
+      "value": 131,
       "enabled": true,
       "type": "text"
     },
@@ -141,7 +141,7 @@
     },
     {
       "key": "lesson_again_id",
-      "value": 18,
+      "value": 330,
       "enabled": true,
       "type": "text"
     },
@@ -153,7 +153,7 @@
     },
     {
       "key": "teacher_cdkey",
-      "value": "76a8fa20a20211e8b73c19f53a5a46f6",
+      "value": "2dfe8da0a5de11e8bd298bbd511f970b",
       "enabled": true,
       "type": "text"
     },
@@ -189,6 +189,6 @@
     }
   ],
   "_postman_variable_scope": "environment",
-  "_postman_exported_at": "2018-08-21T09:37:37.963Z",
+  "_postman_exported_at": "2018-08-22T08:25:09.008Z",
   "_postman_exported_using": "Postman/6.0.10"
 }

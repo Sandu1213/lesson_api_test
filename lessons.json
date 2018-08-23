@@ -809,7 +809,7 @@
 					"raw": "{\n\t\"subjectId\":2,\n\t\"skillName\":\"npl\"\n}"
 				},
 				"url": {
-					"raw": "http://{{url}}/{{base}}/skills",
+					"raw": "http://{{url}}/{{base}}/skills?x-per-page=9999",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
@@ -817,6 +817,12 @@
 					"path": [
 						"{{base}}",
 						"skills"
+					],
+					"query": [
+						{
+							"key": "x-per-page",
+							"value": "9999"
+						}
 					]
 				}
 			},
@@ -1542,10 +1548,10 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "b2c692eb-b8e6-4bce-9611-9e681e53e27d",
+						"id": "c7840985-678f-4a69-93c4-0e8c948ff1fe",
 						"type": "text/javascript",
 						"exec": [
-							"pm.environment.set(\"les_skill_name\",\"指定技能\")"
+							"pm.environment.set(\"les_skill_name\",\"指定技能{{$randomInt}}\")"
 						]
 					}
 				}
@@ -4119,6 +4125,155 @@
 						"{{base}}",
 						"lessons",
 						"{{lesson_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "科目-删除课程新增科目",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "511b5e0e-d170-4379-ad98-62296e7c904b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"responseCode is 200\",function(){",
+							"    pm.response.to.have.status(200)",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/subjects/{{les_sub_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"subjects",
+						"{{les_sub_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "技能-删除课程新增技能",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d039230-0cd4-4e42-a754-887c43ee4f66",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"1\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/skills/{{les_skillid}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"skills",
+						"{{les_skillid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "技能-删除课程新增技能2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d039230-0cd4-4e42-a754-887c43ee4f66",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"1\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/skills/{{les_again_skillid}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"skills",
+						"{{les_again_skillid}}"
 					]
 				}
 			},

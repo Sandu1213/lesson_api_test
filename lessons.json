@@ -1463,10 +1463,10 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "ecefe1ec-643f-4bcb-86e1-2c93f981f693",
+						"id": "20896ca7-5240-408e-96f0-08bdd14faf4f",
 						"type": "text/javascript",
 						"exec": [
-							"pm.environment.set(\"les_sub_name\",\"指定课程{{$randomInt}}\")"
+							"pm.environment.set(\"les_sub_name\",\"指定课程{{$randomInt}}{{$randomInt}}\")"
 						]
 					}
 				},
@@ -1548,10 +1548,10 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c7840985-678f-4a69-93c4-0e8c948ff1fe",
+						"id": "07fa1e2f-ffab-420d-b18f-27868dbe4089",
 						"type": "text/javascript",
 						"exec": [
-							"pm.environment.set(\"les_skill_name\",\"指定技能{{$randomInt}}\")"
+							"pm.environment.set(\"les_skill_name\",\"指定技能{{$randomInt}}{{$randomInt}}\")"
 						]
 					}
 				}
@@ -1640,7 +1640,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \n\t\"skills\":[{\"id\":{{les_skillid}},\"score\":80}],\n\t\"lessonName\":\"lessons{{$randomInt}}\",\n\t\"goals\":\"打造精品课程\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"extra\": {\n        \"coverUrl\": \"{{lesson_coverUrl}}\",\n        \"vedioUrl\": \"{{lesson_videoUrl}}\"\n    }\n\t\n}"
+					"raw": "{    \n\t\"skills\":[{\"id\":{{les_skillid}},\"score\":80}],\n\t\"lessonName\":\"lessons{{$randomInt}}{{$randomInt}}\",\n\t\"goals\":\"打造精品课程\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"extra\": {\n        \"coverUrl\": \"{{lesson_coverUrl}}\",\n        \"vedioUrl\": \"{{lesson_videoUrl}}\"\n    }\n\t\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/lessons",
@@ -2539,7 +2539,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":10,\n    \"extra\":{\n    \t\"coverUrl\":\"http://git.keepwork.com/gitlab_rls_lesson/keepworkcs/raw/master/lesson_images/img_1521719336579.gif\"\n    }\n}"
+					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}{{$randomInt}} \",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":10,\n    \"extra\":{\n    \t\"coverUrl\":\"http://git.keepwork.com/gitlab_rls_lesson/keepworkcs/raw/master/lesson_images/img_1521719336579.gif\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/packages",

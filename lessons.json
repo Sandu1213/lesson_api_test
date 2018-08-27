@@ -6,7 +6,114 @@
 	},
 	"item": [
 		{
-			"name": "ADMINS-资源列表",
+			"name": "获取stage环境token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b1d26e8c-8052-49c7-8d08-8f475d1c7236",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"get the stage token code\",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonstr = JSON.parse(responseBody);",
+							"pm.environment.set(\"stage_token\",\"Bearer \"+jsonstr.data.token);",
+							"console.log(pm.environment.get(\"stage_token\"));",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"functest\",\n\t\"password\":\"123456\"\n}"
+				},
+				"url": {
+					"raw": "https://stage.keepwork.com/api/wiki/models/user/login",
+					"protocol": "https",
+					"host": [
+						"stage",
+						"keepwork",
+						"com"
+					],
+					"path": [
+						"api",
+						"wiki",
+						"models",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取后台权限token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db32df88-84f5-4768-bcad-b53c53e0ac3c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"get the backend token \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonstr = JSON.parse(responseBody);",
+							"pm.environment.set(\"Auth\",\"Bearer \"+jsonstr.data.token);",
+							"console.log(pm.environment.get(\"Auth\"));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{stage_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"functest\",\n\t\"password\":\"123456\"\n}"
+				},
+				"url": {
+					"raw": "https://stage.keepwork.com/api/wiki/models/admin/login",
+					"protocol": "https",
+					"host": [
+						"stage",
+						"keepwork",
+						"com"
+					],
+					"path": [
+						"api",
+						"wiki",
+						"models",
+						"admin",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMINS-资源列表 ",
 			"event": [
 				{
 					"listen": "test",
@@ -36,7 +143,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"packageName\":\"NPL\"\n}"
+					"raw": "{\n  \"packageName\":\"NPL\"\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/admins/Skills",
@@ -1592,11 +1699,11 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "21360716-c925-4c11-82fe-c9a97272f524",
+						"id": "667613e4-2925-41e3-ab98-ecd40dbdc800",
 						"type": "text/javascript",
 						"exec": [
-							"pm.environment.set(\"lesson_coverUrl\",\"http://keepwork.cover\")",
-							"pm.environment.set(\"lesson_videoUrl\",\"http://keepwork.video\")",
+							"pm.environment.set(\"lesson_coverUrl\",\"http://www.zgcgg.com/upload/file/contents/2016/05/573161e5b1312.jpg\")",
+							"pm.environment.set(\"lesson_videoUrl\",\"http://oy41jt2uj.bkt.clouddn.com/o_1c8hp10ufg06pc6104m1g5r1pt3j.mp4?e=2135703416&token=LYZsjH0681n9sWZqCM4E2KmU6DsJOE7CAM4O3eJq:BOCvp_nRAWLwZH8lfSAK0WqxKkM=\")",
 							"",
 							"// var info =[{\"id\":pm.environment.get(\"les_skillid\"),\"score\":90}];",
 							"// //var str =\"{\"+\"id：\"+{{les_skillid}}+\",\"+\"score:90\"+\"}\";",
@@ -2090,7 +2197,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "554bd486-8ca8-48dd-9dd0-042d2145bb90",
+						"id": "0037f51c-56d9-4a54-821e-5465c3ea32f9",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"lesson publish verification code\",function(){",
@@ -2098,7 +2205,7 @@
 							"});",
 							"",
 							"pm.test(\"lesson context record is correct\",function(){",
-							"    pm.expect(pm.response.text()).to.include(\"test\");",
+							"    pm.expect(pm.response.text()).to.include(\"神奇之旅\");",
 							"});",
 							"",
 							"var jsondata = JSON.parse(responseBody);",
@@ -2113,7 +2220,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/x-www-form-urlencoded"
 					},
 					{
 						"key": "Authorization",
@@ -2121,8 +2228,15 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"content\":\"hello world test\"\n}"
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "content",
+							"value": "```@Lesson\nstyleID: 0\nlesson:\n  LessonNo: '1'\n  Title: Paracraft神奇之旅\n  LessonGoals: |-\n    - 学会使用paracraft\n    - 学会分享world\n    - 学会命令行切换\n  CoverImageOfTheLesson: >-\n    https://steamuserimages-a.akamaihd.net/ugc/924805627751107322/68A6DFA0129AC0AA20661B99195E979DC15B23F6/\n  AnimationOfTheLesson: 'https://youtu.be/bNy0XuTCJ0w'\n  animations:\n    - id: 55637700-a9a5-11e8-a83f-fd0094fb6972\n      title: TI8\n      coverImage: 'https://cdn0.gamesports.net/content_teasers/69000/69655.jpg?1526977267'\n      animation: 'https://youtu.be/bNy0XuTCJ0w'\n  vip: false\n  CodeReadLine: '20'\n  CodeWriteLine: '10'\n  Commands: '30'\n\n```\n\n```@Hint\nstyleID: 0\nhint:\n  content: 这是第一节课，需要引导好孩子们去学习创造，培养思想\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: 988ee640-a9a5-11e8-a83f-fd0094fb6972\n      type: '0'\n      title: 单选题，选A还是选B\n      score: 2\n      desc: A就是表现好\n      answer:\n        - A\n      options:\n        - item: option 1\n        - item: option 2\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: c12a8f50-a9a5-11e8-a83f-fd0094fb6972\n      type: '1'\n      title: 大富科技的简称是？\n      score: 5\n      desc: 因为所以\n      answer:\n        - A\n        - B\n      options:\n        - item: tatfook\n        - item: 大富\n        - item: 大科\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: d53a0ed0-a9a5-11e8-a83f-fd0094fb6972\n      type: '2'\n      title: 不按时提交代码的行为，对吗？\n      score: 10\n      desc: 你觉得呢？\n      answer:\n        - B\n      options:\n        - item: true\n        - item: false\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: f841cd00-a9a5-11e8-a83f-fd0094fb6972\n      type: '3'\n      title: 请描述一下PAC大赛对你的收获和感悟~\n      score: 50\n      desc: |-\n        99999999\n        okay!\n      answer: []\n      options:\n        - item: 太多，太多，无以言表\n\n```\n\n\n",
+							"description": "",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/lessons/{{lesson_id}}/contents",
@@ -2146,7 +2260,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "05fdfd71-1fc9-4ca3-acab-e7e335575739",
+						"id": "364f343c-889b-4a23-ad8b-f1d790b486c7",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"lesson content verification \",function(){",
@@ -2154,7 +2268,7 @@
 							"});",
 							"",
 							"pm.test(\"lesson context record is correct\",function(){",
-							"    pm.expect(pm.response.text()).to.include(\"test\");",
+							"    pm.expect(pm.response.text()).to.include(\"神奇之旅\");",
 							"});"
 						]
 					}
@@ -2539,7 +2653,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}{{$randomInt}} \",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":10,\n    \"extra\":{\n    \t\"coverUrl\":\"http://git.keepwork.com/gitlab_rls_lesson/keepworkcs/raw/master/lesson_images/img_1521719336579.gif\"\n    }\n}"
+					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}{{$randomInt}} \",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":0,\n    \"extra\":{\n    \t\"coverUrl\":\"{{package_cover}}\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/packages",
@@ -2874,11 +2988,11 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "21360716-c925-4c11-82fe-c9a97272f524",
+						"id": "c00509d6-dbb0-42b1-a5ca-08b97fd31238",
 						"type": "text/javascript",
 						"exec": [
-							"pm.environment.set(\"lesson_coverUrl\",\"http://keepwork.cover\")",
-							"pm.environment.set(\"lesson_videoUrl\",\"http://keepwork.video\")",
+							"pm.environment.set(\"lesson_coverUrl\",\"https://steamuserimages-a.akamaihd.net/ugc/920299023019269517/F821FB6CC0DCED3CC22FB2EB01348E8C28CB7745/\")",
+							"pm.environment.set(\"lesson_videoUrl\",\"http://oy41jt2uj.bkt.clouddn.com/o_1c8mvuvvg1639regqrbq1p12neb.mp4?e=2135703626&token=LYZsjH0681n9sWZqCM4E2KmU6DsJOE7CAM4O3eJq:zAZ30PTBPhonV6yTTYEFH5xla1U=\")",
 							"",
 							"// var info =[{\"id\":pm.environment.get(\"les_skillid\"),\"score\":90}];",
 							"// //var str =\"{\"+\"id：\"+{{les_skillid}}+\",\"+\"score:90\"+\"}\";",
@@ -2922,7 +3036,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \n\t\"skills\":[{\"id\":1,\"score\":80}],\n\t\"lessonName\":\"新课程NO.{{$randomInt}}\",\n\t\"goals\":\"新课程哟\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"extra\": {\n        \"coverUrl\": \"{{lesson_coverUrl}}\",\n        \"vedioUrl\": \"{{lesson_videoUrl}}\"\n    }\n\t\n}"
+					"raw": "{    \n\t\"skills\":[{\"id\":1,\"score\":80}],\n\t\"lessonName\":\"新课程NO.{{$randomInt}}{{$randomInt}}\",\n\t\"goals\":\"新课程哟\",\n\t\"subjectId\":{{les_sub_id}},\n\t\"extra\": {\n        \"coverUrl\": \"{{lesson_coverUrl}}\",\n        \"vedioUrl\": \"{{lesson_videoUrl}}\"\n    }\n\t\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/lessons",
@@ -2933,6 +3047,69 @@
 					"path": [
 						"{{base}}",
 						"lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程-发布 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6520298-3f24-45b5-94e4-2b921e3279c8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"lesson publish verification code\",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"lesson context record is correct\",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"paracraft\");",
+							"});",
+							"",
+							"var jsondata = JSON.parse(responseBody);",
+							"pm.environment.set(\"les_content_ver\",jsondata.version);",
+							"console.log(pm.environment.get(\"les_content_ver\"));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "content",
+							"value": "```@Lesson\nstyleID: 0\nlesson:\n  LessonNo: '2'\n  Title: Paracraft神奇之旅\n  LessonGoals: |-\n    - 学会使用paracraft\n    - 学会分享world\n    - 学会命令行切换\n  CoverImageOfTheLesson: >-\n    https://steamuserimages-a.akamaihd.net/ugc/924805627751107322/68A6DFA0129AC0AA20661B99195E979DC15B23F6/\n  AnimationOfTheLesson: 'https://youtu.be/bNy0XuTCJ0w'\n  animations:\n    - id: 55637700-a9a5-11e8-a83f-fd0094fb6972\n      title: TI8\n      coverImage: 'https://cdn0.gamesports.net/content_teasers/69000/69655.jpg?1526977267'\n      animation: 'https://youtu.be/bNy0XuTCJ0w'\n  vip: false\n  CodeReadLine: '20'\n  CodeWriteLine: '10'\n  Commands: '30'\n\n```\n\n```@Hint\nstyleID: 0\nhint:\n  content: 这是第一节课，需要引导好孩子们去学习创造，培养思想\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: 988ee640-a9a5-11e8-a83f-fd0094fb6972\n      type: '0'\n      title: 单选题，选A还是选B\n      score: 2\n      desc: A就是表现好\n      answer:\n        - A\n      options:\n        - item: option 1\n        - item: option 2\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: c12a8f50-a9a5-11e8-a83f-fd0094fb6972\n      type: '1'\n      title: 大富科技的简称是？\n      score: 5\n      desc: 因为所以\n      answer:\n        - A\n        - B\n      options:\n        - item: tatfook\n        - item: 大富\n        - item: 大科\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: d53a0ed0-a9a5-11e8-a83f-fd0094fb6972\n      type: '2'\n      title: 不按时提交代码的行为，对吗？\n      score: 10\n      desc: 你觉得呢？\n      answer:\n        - B\n      options:\n        - item: true\n        - item: false\n\n```\n\n```@Quiz\nstyleID: 0\nquiz:\n  data:\n    - id: f841cd00-a9a5-11e8-a83f-fd0094fb6972\n      type: '3'\n      title: 请描述一下PAC大赛对你的收获和感悟~\n      score: 50\n      desc: |-\n        99999999\n        okay!\n      answer: []\n      options:\n        - item: 太多，太多，无以言表\n\n```\n\n\n",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/lessons/{{lesson_again_id}}/contents",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"lessons",
+						"{{lesson_again_id}}",
+						"contents"
 					]
 				}
 			},
@@ -3037,64 +3214,6 @@
 						"packages",
 						"{{lessonpackage_id}}",
 						"lessons"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "课程包-删除课程",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "b3c4e707-1060-43b6-a6a5-0168686602a6",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"verification code \",function(){",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"content verification \",function(){",
-							"    pm.expect(pm.response.text()).to.include(\"1\");",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{Auth}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"lessonId\":{{lesson_again_id}}\n}"
-				},
-				"url": {
-					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}/lessons?lessonId={{lesson_again_id}}",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"{{base}}",
-						"packages",
-						"{{lessonpackage_id}}",
-						"lessons"
-					],
-					"query": [
-						{
-							"key": "lessonId",
-							"value": "{{lesson_again_id}}"
-						}
 					]
 				}
 			},
@@ -4026,6 +4145,64 @@
 						{
 							"key": "lessonId",
 							"value": "{{lesson_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-移除新增课程",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5147ce80-e301-46cb-9bf4-9ec8a35183bc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content verification \",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"1\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lessonId\":{{lesson_again_id}}\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}/lessons?lessonId={{lesson_again_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"{{lessonpackage_id}}",
+						"lessons"
+					],
+					"query": [
+						{
+							"key": "lessonId",
+							"value": "{{lesson_again_id}}"
 						}
 					]
 				}

@@ -263,6 +263,60 @@
 			"response": []
 		},
 		{
+			"name": "ADMINS-资源创建 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef331740-df0b-4610-bd05-0ea67787fbcc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Admin resource create verification \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Admin create content is correct\",function(){",
+							"    pm.expect(pm.response.text()).to.include(\"把妹\");",
+							"});",
+							"",
+							"var res = JSON.parse(responseBody);",
+							"pm.environment.set(\"admin_lesson_id\",res.id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"skills\":[{\"id\":3,\"score\":80}],\n\t\"lessonName\":\"把妹?\",\n\t\"userId\":1,\n\t\"goals\":\"happy and study\",\n\t\"subjectId\":8,\n\t\"extra\": {\n        \"coverUrl\": \"ss\",\n        \"vedioUrl\": \"cc\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/admins/Lessons",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"admins",
+						"Lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "ADMINS-资源更新",
 			"event": [
 				{
@@ -1040,7 +1094,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "cdc90a2d-141a-444e-8798-e35c64e25e72",
+						"id": "cb938bf8-4219-44af-b979-06bc2236cf9e",
 						"type": "text/javascript",
 						"exec": [
 							"pm.environment.set(\"cdKey_count\",2);"
@@ -1084,7 +1138,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"subjectId\":2,\n\t\"skillName\":\"npl\"\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/admins/teacherCDKeys/generate?count={{cdKey_count}}",
@@ -2653,7 +2707,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}{{$randomInt}} \",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":0,\n    \"extra\":{\n    \t\"coverUrl\":\"{{package_cover}}\"\n    }\n}"
+					"raw": "{   \n\t\"lessons\":[{{lesson_id}}],\n\t\"packageName\":\"编程No.{{$randomInt}}{{$randomInt}} \",\n\t\"subjectId\":{{les_sub_id}},\n\t\"minAge\":\"5\",\n\t\"maxAge\":\"30\",\n\t\"intro\":\"学会使用paracraft搭建世界，探索世界\",\n\t\"rmb\":10,\n    \"extra\":{\n    \t\"coverUrl\":\"{{package_cover}}\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/packages",
@@ -3149,7 +3203,57 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"lessonId\":{{lesson_again_id}}\n}"
+					"raw": "{\n\t\"lessonId\":{{lesson_again_id}},\n\t\"lessonNo\":\"\"\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}/lessons",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"packages",
+						"{{lessonpackage_id}}",
+						"lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课程包-课程编号更新",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67e4b43a-35a4-4670-bc80-cf3349cd20ad",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lessonId\":{{lesson_again_id}},\n\t\"lessonNo\":3\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/packages/{{lessonpackage_id}}/lessons",
@@ -3553,7 +3657,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"packageId\":{{lessonpackage_id}},\n\t\"lessonId\":{{lesson_id}}\n}"
+					"raw": "{\n\t\"packageId\":{{lessonpackage_id}},\n\t\"lessonId\":{{lesson_again_id}}\n}"
 				},
 				"url": {
 					"raw": "http://{{url}}/{{base}}/classrooms",
@@ -3615,6 +3719,100 @@
 		},
 		{
 			"name": "课堂-加入课堂",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "038053e8-b39f-43b9-9bf8-0069b348ee73",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"get classroom code is ok\",function(){",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"key\":\"{{room_key}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/classrooms/join",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"classrooms",
+						"join"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课堂-退出课堂",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c8b8f6d-9348-4aaa-b424-636ef4df70a3",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\" classroom code is ok\",function(){",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/classrooms/quit",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"classrooms",
+						"quit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "课堂-再加入课堂",
 			"event": [
 				{
 					"listen": "test",
@@ -3849,6 +4047,55 @@
 			"response": []
 		},
 		{
+			"name": "学习记录-领取课堂学习奖励",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "42088374-40c0-4a6f-ae5b-e62c6bd5e678",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"learn Records verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"id\":{{learnrecord_id}}\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/learnRecords/{{learnrecord_id}}/reward",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"learnRecords",
+						"{{learnrecord_id}}",
+						"reward"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "课堂-下课",
 			"event": [
 				{
@@ -3899,7 +4146,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "90741cf8-70fb-4c9c-997e-96254dfaaf70",
+						"id": "2babed3c-21a0-4b59-9695-b65b8d721e20",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"learn Records verification code \",function(){",
@@ -3910,7 +4157,8 @@
 							"    pm.expect(pm.response.text()).to.include(\"0\")",
 							"});",
 							"var res = JSON.parse(responseBody);",
-							"pm.environment.set(\"learn_id\",res.id)"
+							"pm.environment.set(\"learn_id\",res.id)",
+							""
 						]
 					}
 				}
@@ -3946,7 +4194,7 @@
 			"response": []
 		},
 		{
-			"name": "学习记录-获取用户学习记录",
+			"name": "学习记录-获取当前用户所有学习记录",
 			"event": [
 				{
 					"listen": "test",
@@ -4088,6 +4336,104 @@
 						"{{base}}",
 						"learnRecords",
 						"{{learn_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "学习记录-领取自学学习奖励",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b8bc79c-a1db-4d28-86b6-e69093f15a09",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"learn Records verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"id\":{{learn_id}}\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/learnRecords/{{learn_id}}/reward",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"learnRecords",
+						"{{learn_id}}",
+						"reward"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "系统功能-发送邮件",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b8bc79c-a1db-4d28-86b6-e69093f15a09",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"learn Records verification code \",function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"to\":\"dslhmily@163.com\",\n\t\"subject\":\"Test email function\",\n\t\"html\":\"<p>this is a test content</p>\"\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/{{base}}/emails",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{base}}",
+						"emails"
 					]
 				}
 			},
